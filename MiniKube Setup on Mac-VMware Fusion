@@ -1,0 +1,27 @@
+# Minikube will setup a single node kubernetes cluster - master and node on the same VM.
+# By default, its expecting on a Virtualbox environment on your laptop, but if you're using VMware Fusion on a Mac and
+would like to use that, then start minikube as specified on LINE#20.
+
+Step 1:
+		○ # Install kubectl on macOS
+			§ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.14.3/bin/darwin/amd64/kubectl
+			§ chmod +x ./kubectl
+			§ sudo mv ./kubectl /usr/local/bin/kubectl
+      § kubectl version
+Step 2:
+		○ # Install and test Minikube on macOS
+			§ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 \
+  && chmod +x minikube
+			§ sudo mv minikube /usr/local/bin
+			# Make sure that the VMware Fusion is setup on MacOS and run the following commands from the terminal
+			§ export PATH=$PATH:"/Applications/VMware Fusion.app/Contents/Library"
+			§ vmrun list
+			§ which kubectl
+			§ ./minikube --vm-driver=vmwarefusion start
+			§ kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.4 --port=8080
+			§ kubectl cluster-info
+			§ kubectl get pods
+			§ kubectl get nodes
+			§ kubectl expose deployment hello-minikube --type=NodePort
+			§ minikube service hello-minikube --url > access the IP address provided here and go to a web browser and test it out
+			§ Cleanup - kubectl delete deployment hello-minikube
